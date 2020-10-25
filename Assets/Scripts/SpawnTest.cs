@@ -79,17 +79,21 @@ public class SpawnTest : MonoBehaviour
             bestMarker.position = scenarios[0].ScenarioTurret.transform.position;
             string result = "";
             scenarios.ForEach(s => result += $" {s.GetScore()} ; ");
-            Debug.Log($"{result}");
-            Debug.Log($"Best score {scenarios[0].GetScore()}");
+            Debug.Log($"Scores: {result}");
             yield return new WaitForSeconds(pauseBetweenIterations);
             if (currentIteration < iterationCount - 1)
             {
-                foreach (var item in scenarios)
-                {
-                    item.Clear();
-                }
+                ClearAllScenarios();
                 DoGenetics();
             }
+        }
+    }
+
+    private void ClearAllScenarios()
+    {
+        foreach (Scenario scenario in scenarios)
+        {
+            scenario.Clear();
         }
     }
 
@@ -102,9 +106,9 @@ public class SpawnTest : MonoBehaviour
         for (int i = leaveBest; i < PoolCount; i++)
         {
             // do crossover and stuff
-            var newValues = DoCrossOver(firstArray, secondArray);
+            var newValues = Genetics.DoCrossOver(firstArray, secondArray);
             // do mutation
-            newValues = DoMutation(newValues);
+            newValues = Genetics.DoMutation(newValues, mutationChance, new System.Func<float>[]{GetRandomPower,GetRandomRotation});
             // do next iteration
             scenarios[i].InitValues(newValues);
         }
@@ -122,32 +126,5 @@ public class SpawnTest : MonoBehaviour
     private float GetRandomRotation()
     {
         return Random.Range(0, MaxRotation);
-    }
-
-    private float[] DoCrossOver(float[] a, float[] b)
-    {
-        bool bFirst = Random.value < 0.5f;
-        var firstArray = a;
-        var secondArray = b;
-        if (bFirst)
-        {
-            firstArray = b;
-            secondArray = a;
-        }
-        return new float[] { firstArray[0], secondArray[1] };
-    }
-    private float[] DoMutation(float[] input)
-    {
-        for (int i = 0; i < input.Length; i++)
-        {
-            bool mutate = Random.value < mutationChance;
-
-            if (mutate)
-            {
-                input[i] = i == 0 ? GetRandomPower() : GetRandomRotation();
-            }
-        }
-
-        return input;
     }
 }
