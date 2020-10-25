@@ -1,32 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnTest : MonoBehaviour
+public abstract class AbstractTurretGeneticTest : MonoBehaviour
 {
-    [SerializeField]
-    private float MaxPower = 100;
-    [SerializeField]
-    private float MaxRotation = 360;
-    [SerializeField]
-    private Turret turretPrefab;
-    [SerializeField]
-    private Transform goalPrefab;
-    [SerializeField]
-    private Transform boxPrefab
-;
     [SerializeField]
     private int iterationCount = 10;
     [SerializeField]
     private float timeOutSeconds = 10;
     [SerializeField]
-    private float PoolCount = 10;
+    protected float PoolCount = 10;
 
-    [SerializeField]
-    private float boxDistance = 11;
-
-    [SerializeField]
-    private Vector3 goalPosition = new Vector3(0, 0, 4);
 
     [SerializeField]
     private Transform bestMarker;
@@ -38,31 +23,17 @@ public class SpawnTest : MonoBehaviour
 
     private int currentIteration = 0;
 
-    List<SimpleTurretScenario> scenarios;
+    protected List<IScenario> scenarios;
 
     // Start is called before the first frame update
     void Start()
     {
-        scenarios = new List<SimpleTurretScenario>();
-        for (int i = 0; i < PoolCount; i++)
-        {
-            Vector3 boxposition = new Vector3(i * boxDistance, 0, 0);
-            var box = Instantiate(boxPrefab, boxposition, Quaternion.identity, null);
-            var scenarioGoal = Instantiate(goalPrefab);
-            var scenarioTurret = Instantiate(turretPrefab);
-            scenarioGoal.transform.SetParent(box);
-            scenarioTurret.transform.SetParent(box);
-            scenarioGoal.transform.localPosition = goalPosition;
-            scenarioTurret.transform.localPosition = Vector3.zero;
-
-            float[] scenarioParameters = new float[] { GetRandomPower(), GetRandomRotation() };
-            SimpleTurretScenario scenario = new SimpleTurretScenario(scenarioGoal, scenarioTurret, scenarioParameters);
-            scenarios.Add(scenario);
-        }
+        InitializeTest();
 
         StartCoroutine(DoIterations());
     }
 
+    protected abstract void InitializeTest();
 
     IEnumerator DoIterations()
     {
@@ -76,7 +47,7 @@ public class SpawnTest : MonoBehaviour
                 yield return null;
             }
             scenarios.Sort((scenarioA, scenarioB) => scenarioA.GetScore().CompareTo(scenarioB.GetScore()));
-            bestMarker.position = scenarios[0].ScenarioTurret.transform.position;
+            bestMarker.position = scenarios[0].GetTurret().position;
             string result = "";
             scenarios.ForEach(s => result += $" {s.GetScore()} ; ");
             Debug.Log($"Scores: {result}");
@@ -91,13 +62,13 @@ public class SpawnTest : MonoBehaviour
 
     private void ClearAllScenarios()
     {
-        foreach (SimpleTurretScenario scenario in scenarios)
+        foreach (IScenario scenario in scenarios)
         {
             scenario.Clear();
         }
     }
 
-    private void DoGenetics()
+    protected void DoGenetics()
     {
         // leave best 2
         int leaveBest = 2;
@@ -108,23 +79,16 @@ public class SpawnTest : MonoBehaviour
             // do crossover and stuff
             var newValues = Genetics.DoCrossOver(firstArray, secondArray);
             // do mutation
-            newValues = Genetics.DoMutation(newValues, mutationChance, new System.Func<float>[]{GetRandomPower,GetRandomRotation});
+            newValues = Genetics.DoMutation(newValues, mutationChance, GetRandomFunctions());
             // do next iteration
             scenarios[i].InitValues(newValues);
         }
     }
 
+    protected abstract Func<float>[] GetRandomFunctions();
+
     private bool IsDone()
     {
         return scenarios.TrueForAll(item => item.IsDone());
-    }
-
-    private float GetRandomPower()
-    {
-        return Random.Range(0, MaxPower);
-    }
-    private float GetRandomRotation()
-    {
-        return Random.Range(0, MaxRotation);
     }
 }

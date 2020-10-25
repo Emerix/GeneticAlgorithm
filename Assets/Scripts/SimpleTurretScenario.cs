@@ -1,6 +1,6 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SimpleTurretScenario
+public class SimpleTurretScenario : IScenario
 {
     public Transform ScenarioGoal { get; set; }
     public Turret ScenarioTurret { get; set; }
@@ -47,5 +47,10 @@ public class SimpleTurretScenario
         GameObject.Destroy(bullet.gameObject);
         Debug.Log("Destroying Bullet");
         bullet = null;
+    }
+
+    public Transform GetTurret()
+    {
+        return ScenarioTurret.transform;
     }
 }

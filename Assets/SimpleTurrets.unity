@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 43103845}
   m_Layer: 0
-  m_Name: Flag
+  m_Name: BestMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -263,22 +263,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 996177487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4611fa65c64585f44b154a520481c5a9, type: 3}
+  m_Script: {fileID: 11500000, guid: c3f04668536193b4f91d252a9036886a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxPower: 10
+  iterationCount: 10
+  timeOutSeconds: 10
+  PoolCount: 10
+  bestMarker: {fileID: 43103845}
+  pauseBetweenIterations: 1
+  mutationChance: 0.1
+  MaxPower: 100
   MaxRotation: 360
   turretPrefab: {fileID: 1089905581, guid: 9379a46bf1c243b418987dae361b1305, type: 3}
   goalPrefab: {fileID: 2654472428012673388, guid: 0ce3d10053cdc064b94d8cc1edcbfcb2, type: 3}
   boxPrefab: {fileID: 3173125797945136182, guid: 892f6a058184cd0458ce49baf2cd99d7, type: 3}
-  iterationCount: 50
-  timeOutSeconds: 2
+  iterationCount: 10
+  timeOutSeconds: 10
   PoolCount: 10
   boxDistance: 11
   goalPosition: {x: 0, y: 0, z: 4}
   bestMarker: {fileID: 43103845}
-  pauseBetweenIterations: 1
-  mutationChance: 0.25
+  pauseBetweenIterations: 0.5
+  mutationChance: 0.1
 --- !u!4 &996177489
 Transform:
   m_ObjectHideFlags: 0
