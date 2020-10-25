@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Scenario
+public class SimpleTurretScenario
 {
     public Transform ScenarioGoal { get; set; }
     public Turret ScenarioTurret { get; set; }
@@ -10,7 +10,7 @@ public class Scenario
     private Bullet bullet;
     private float score = float.PositiveInfinity;
 
-    public Scenario(Transform goal, Turret turret, float[] values)
+    public SimpleTurretScenario(Transform goal, Turret turret, float[] values)
     {
         ScenarioGoal = goal;
         ScenarioTurret = turret;

@@ -38,12 +38,12 @@ public class SpawnTest : MonoBehaviour
 
     private int currentIteration = 0;
 
-    List<Scenario> scenarios;
+    List<SimpleTurretScenario> scenarios;
 
     // Start is called before the first frame update
     void Start()
     {
-        scenarios = new List<Scenario>();
+        scenarios = new List<SimpleTurretScenario>();
         for (int i = 0; i < PoolCount; i++)
         {
             Vector3 boxposition = new Vector3(i * boxDistance, 0, 0);
@@ -56,7 +56,7 @@ public class SpawnTest : MonoBehaviour
             scenarioTurret.transform.localPosition = Vector3.zero;
 
             float[] scenarioParameters = new float[] { GetRandomPower(), GetRandomRotation() };
-            Scenario scenario = new Scenario(scenarioGoal, scenarioTurret, scenarioParameters);
+            SimpleTurretScenario scenario = new SimpleTurretScenario(scenarioGoal, scenarioTurret, scenarioParameters);
             scenarios.Add(scenario);
         }
 
@@ -91,7 +91,7 @@ public class SpawnTest : MonoBehaviour
 
     private void ClearAllScenarios()
     {
-        foreach (Scenario scenario in scenarios)
+        foreach (SimpleTurretScenario scenario in scenarios)
         {
             scenario.Clear();
         }
