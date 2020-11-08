@@ -41,13 +41,14 @@ public class Snakes : AbstractGeneticTest
         {
             scenarios[CurrentSlot].Proceed();
             currentSnake = scenarios[CurrentSlot].GetTestedObject();
-
+            currentSnake.transform.position = start.position;
         }
     }
 
     private void KillSnake()
     {
-        Destroy(currentSnake.gameObject);
+        currentSnake.gameObject.SetActive(false);
+        currentSnake.GetComponent<SnakeParameters>()?.Reset();
     }
 
     protected override Func<float>[] GetRandomFunctions()

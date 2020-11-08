@@ -23,11 +23,17 @@ public class SnakeParameters : MonoBehaviour
     [SerializeField]
     public HingeJointParameters[] hingeJointParameters;
 
+    private List<Vector3> positions = new List<Vector3>();
+    private List<Quaternion> rotations = new List<Quaternion>();
 
     // Start is called before the first frame update
     void Start()
     {
-
+        foreach (Transform child in transform)
+        {
+            positions.Add(child.position);
+            rotations.Add(child.rotation);
+        }
     }
 
     // Update is called once per frame
@@ -50,6 +56,16 @@ public class SnakeParameters : MonoBehaviour
             hingeJointParameters[i].sineSpeed = newParameters[index];
             hingeJointParameters[i].sinceSize = newParameters[index+1];
             hingeJointParameters[i].offset = newParameters[index+2];
+        }
+    }
+
+    public void Reset()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Transform child = transform.GetChild(i);
+            child.position = positions[i];
+            child.rotation = rotations[i];
         }
     }
 }
