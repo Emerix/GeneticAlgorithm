@@ -38,7 +38,6 @@ public class SimpleTurretScenario : IScenario
 
     public float GetScore()
     {
-        score = Vector3.Distance(ScenarioGoal.transform.position, bullet.transform.position);
         return score;
     }
 
@@ -49,8 +48,13 @@ public class SimpleTurretScenario : IScenario
         bullet = null;
     }
 
-    public Transform GetTurret()
+    public Transform GetTestedObject()
     {
         return ScenarioTurret.transform;
+    }
+
+    public void SaveScore()
+    {
+        score = Vector3.Distance(ScenarioGoal.transform.position, bullet.transform.position);
     }
 }

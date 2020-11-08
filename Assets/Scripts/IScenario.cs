@@ -7,7 +7,8 @@ public interface IScenario
     void Clear();
     void Proceed();
     float GetScore();
-    Transform GetTurret();
+    void SaveScore();
+    Transform GetTestedObject();
     void InitValues(float[] newValues);
     bool IsDone();
 }
