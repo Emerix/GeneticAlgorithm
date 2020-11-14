@@ -14,6 +14,10 @@ public class SnakesUI : MonoBehaviour
     Text poolIndexText;
     [SerializeField]
     Text generationText;
+    [SerializeField]
+    Text timeScaleText;
+    [SerializeField]
+    Slider slider;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +30,9 @@ public class SnakesUI : MonoBehaviour
         timeText.text = $"Time left {snakes.CurrentTime.ToString()}";
         poolIndexText.text = $"Slot in Generation {snakes.CurrentSlot.ToString()}";
         generationText.text = $"Generation {snakes.CurrentIteration.ToString()}";
+
+        float timeScale = slider.value;
+        timeScaleText.text = $"TimeScale {timeScale}";
+        Time.timeScale = timeScale;
     }
 }

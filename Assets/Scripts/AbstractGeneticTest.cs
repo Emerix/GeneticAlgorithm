@@ -28,6 +28,8 @@ public abstract class AbstractGeneticTest : MonoBehaviour
     {
         // leave best 2
         int leaveBest = 2;
+
+        Debug.Log("best params: "+ string.Join(", ", scenarios[0].Parameters));
         var firstArray = scenarios[0].Parameters;
         var secondArray = scenarios[1].Parameters;
         for (int i = leaveBest; i < PoolCount; i++)
@@ -111,7 +113,7 @@ public abstract class AbstractGeneticTest : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         InitializeTest();
 

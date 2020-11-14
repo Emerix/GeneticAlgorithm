@@ -53,9 +53,9 @@ public class SnakeParameters : MonoBehaviour
         for (int i = 0; i < hingeJointParameters.Length; i++)
         {
             int index = i * 3;
-            hingeJointParameters[i].sineSpeed = newParameters[index];
-            hingeJointParameters[i].sinceSize = newParameters[index+1];
-            hingeJointParameters[i].offset = newParameters[index+2];
+            hingeJointParameters[i].sinceSize = newParameters[index];
+            hingeJointParameters[i].offset = newParameters[index+1];
+            hingeJointParameters[i].sineSpeed = newParameters[index+2];
         }
     }
 

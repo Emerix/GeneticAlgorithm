@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class Snakes : AbstractGeneticTest
 {
+    [SerializeField]
+    private int MinSinusMultiplier = 10;
+    [SerializeField]
+    private int MaxSinusMultiplier = 100;
+    [SerializeField]
+    private int MaxOffset = 100;
+    [SerializeField]
+    private int MinMotorPower = 100;
+    [SerializeField]
+    private int MaxMotorPower = 2000;
 
     [SerializeField]
     private Transform goal;
@@ -12,15 +22,27 @@ public class Snakes : AbstractGeneticTest
     private Transform start;
     [SerializeField]
     private SnakeParameters snakePrefab;
+    [SerializeField]
+    public float minMovementInTimeframeToPreventTimeout = 0.4f;
+    [SerializeField]
+    public float timeOutWithoutMovement = 2.0f;
     private Transform currentSnake;
     private int snakeJoints = 3;
 
     public float CurrentTime { get; private set; }
     public int CurrentSlot { get; private set; }
 
+    public static Snakes instance;
+
+    protected override void Start()
+    {
+        instance = this;
+        base.Start();
+    }
+
     protected override IEnumerator GenerationDoneCheck()
     {
-        while (IsDone() == false)
+        while (IsDone() == false && CurrentSlot < scenarios.Count)
         {
             CurrentTime = timeOutSeconds;
             while (scenarios[CurrentSlot].IsDone() == false && CurrentTime > 0)
@@ -29,6 +51,7 @@ public class Snakes : AbstractGeneticTest
                 yield return null;
             }
             scenarios[CurrentSlot].SaveScore();
+            Debug.Log($"Reached score: {scenarios[CurrentSlot].GetScore()}");
             KillSnake();
             CurrentSlot++;
             StartSnake();
@@ -53,7 +76,15 @@ public class Snakes : AbstractGeneticTest
 
     protected override Func<float>[] GetRandomFunctions()
     {
-        return new System.Func<float>[] { GetRandomMotorPower, GetRandomOffset, GetRandomSpeed };
+        int parameterPerJoint = 3;
+        System.Func<float>[] functions = new System.Func<float>[snakeJoints * parameterPerJoint];
+        for (int joint = 0; joint < snakeJoints; joint++)
+        {
+            functions[joint * parameterPerJoint + 0] = GetRandomMotorPower;
+            functions[joint * parameterPerJoint + 1] = GetRandomOffset;
+            functions[joint * parameterPerJoint + 2] = GetRandomSpeed;
+        }
+        return functions;
     }
 
     protected override void InitializeTest()
@@ -62,25 +93,10 @@ public class Snakes : AbstractGeneticTest
         for (int i = 0; i < PoolCount; i++)
         {
             var snake = CreateSnake();
-            float[] scenarioParameters = GetRandomSnakeScenario();
+            float[] scenarioParameters = GetRandomFactors();
             SnakeScenario scenario = new SnakeScenario(snake, goal, scenarioParameters);
             scenarios.Add(scenario);
         }
-    }
-
-    private float[] GetRandomSnakeScenario()
-    {
-        Func<float>[] randomFunctions = GetRandomFunctions();
-        float[] randomFactors = new float[randomFunctions.Length * snakeJoints];
-        for (int joint = 0; joint < snakeJoints; joint++)
-        {
-            for (int i = 0; i < randomFunctions.Length; i++)
-            {
-                randomFactors[joint + i] = randomFunctions[i]();
-            }
-        }
-
-        return randomFactors;
     }
 
     private SnakeParameters CreateSnake()
@@ -93,22 +109,23 @@ public class Snakes : AbstractGeneticTest
 
     protected override void StartGeneration()
     {
+        CurrentSlot = 0;
         scenarios[CurrentSlot].Proceed();
         currentSnake = scenarios[CurrentSlot].GetTestedObject();
     }
 
     private float GetRandomSpeed()
     {
-        return UnityEngine.Random.Range(0, 100);
+        return UnityEngine.Random.Range(MinSinusMultiplier, MaxSinusMultiplier);
     }
 
     private float GetRandomOffset()
     {
-        return UnityEngine.Random.Range(0, 100);
+        return UnityEngine.Random.Range(0, MaxOffset);
     }
 
     private float GetRandomMotorPower()
     {
-        return UnityEngine.Random.Range(0, 2000);
+        return UnityEngine.Random.Range(MinMotorPower, MaxMotorPower);
     }
 }
