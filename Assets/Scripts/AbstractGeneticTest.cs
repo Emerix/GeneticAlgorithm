@@ -88,6 +88,10 @@ public abstract class AbstractGeneticTest : MonoBehaviour
 
     private void PlaceMarkerAtBestScore()
     {
+        if (bestMarker == null)
+        {
+            return;
+        }
         bestMarker.position = scenarios[0].GetTestedObject().position;
     }
 

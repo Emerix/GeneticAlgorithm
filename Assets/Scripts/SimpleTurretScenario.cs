@@ -5,6 +5,14 @@ public class SimpleTurretScenario : IScenario
     public Transform ScenarioGoal { get; set; }
     public Turret ScenarioTurret { get; set; }
 
+    public void Construct(ParametersBase parametersBase, Transform goal, float[] parameters)
+    {
+        ScenarioGoal = goal;
+        ScenarioTurret = parametersBase;
+        Parameters = values;
+        InitValues(values);
+    }
+
     public float[] Parameters {get;set;} 
 
     private Bullet bullet;
@@ -12,10 +20,7 @@ public class SimpleTurretScenario : IScenario
 
     public SimpleTurretScenario(Transform goal, Turret turret, float[] values)
     {
-        ScenarioGoal = goal;
-        ScenarioTurret = turret;
-        Parameters = values;
-        InitValues(values);
+        
     }
 
     public void InitValues(float[] values)

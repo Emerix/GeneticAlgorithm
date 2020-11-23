@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,21 +19,18 @@ public class SnakesUI : MonoBehaviour
     Text timeScaleText;
     [SerializeField]
     Slider slider;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
+    [SerializeField]
+    Text timeScaleNumText;
+    
     void Update()
     {
-        timeText.text = $"Time left {snakes.CurrentTime.ToString()}";
+        timeText.text = $"Time left {snakes.CurrentTime.ToString(CultureInfo.InvariantCulture)}";
         poolIndexText.text = $"Slot in Generation {snakes.CurrentSlot.ToString()}";
         generationText.text = $"Generation {snakes.CurrentIteration.ToString()}";
 
         float timeScale = slider.value;
         timeScaleText.text = $"TimeScale {timeScale}";
         Time.timeScale = timeScale;
+        timeScaleNumText.text = timeScale.ToString(CultureInfo.InvariantCulture);
     }
 }

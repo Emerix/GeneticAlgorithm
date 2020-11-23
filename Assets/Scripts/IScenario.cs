@@ -2,6 +2,7 @@ using UnityEngine;
 
 public interface IScenario
 {
+    void Construct(ParametersBase parametersBase, Transform goal, float[] parameters);
     float[] Parameters { get; }
 
     void Clear();

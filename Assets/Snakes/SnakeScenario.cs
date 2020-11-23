@@ -1,24 +1,22 @@
-using System;
 using UnityEngine;
 
-public class SnakeScenario : IScenario
+public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 {
-    private readonly SnakeParameters snake;
-    private float score = float.PositiveInfinity;
-
+    protected P snake;
+    protected float score = float.PositiveInfinity;
     private float previousScore = float.MaxValue;
     private float timeLeft = float.MaxValue;
     private bool isDone = false;
-    public SnakeScenario(SnakeParameters snake, Transform goal, float[] scenarioParameters)
-    {
-        this.snake = snake;
-        this.goal = goal;
-        InitValues(scenarioParameters);
-        isDone = false;
-    }
-
     public float[] Parameters { get; set; }
     public Transform goal { get; set; }
+
+    public void Construct(ParametersBase parametersBase, Transform goal, float[] parameters)
+    {
+        this.snake = (P)parametersBase;
+        this.goal = goal;
+        InitValues(parameters);
+        isDone = false;
+    }
 
     public void Clear()
     {
@@ -62,13 +60,36 @@ public class SnakeScenario : IScenario
     public void Proceed()
     {
         snake.gameObject.SetActive(true);
-        ResetMovementTimetout();
+        if (SnakeCameraFollower.instance != null)
+        {
+            SnakeCameraFollower.instance.SetTarget(snake.transform.GetChild(0));
+        }
+        ResetMovementTimeout();
     }
 
     public void SaveScore()
     {
         float newScore = CalculateNewScore();
         score = newScore;
+    }
+
+    private void ResetMovementTimeout()
+    {
+        timeLeft = Snakes.instance.timeOutWithoutMovement;
+    }
+
+    private void UpdateMovementTimeout()
+    {
+        float newScore = CalculateNewScore();
+        if (Mathf.Abs(newScore - previousScore) > Snakes.instance.minMovementInTimeframeToPreventTimeout)
+        {
+            ResetMovementTimeout();
+            previousScore = newScore;
+        }
+        else
+        {
+            timeLeft -= Time.deltaTime;
+        }
     }
 
     private float CalculateNewScore()
@@ -82,23 +103,8 @@ public class SnakeScenario : IScenario
 
         return newScore;
     }
+}
 
-    private void ResetMovementTimetout()
-    {
-        timeLeft = Snakes.instance.timeOutWithoutMovement;
-    }
-
-    private void UpdateMovementTimeout()
-    {
-        float newScore = CalculateNewScore();
-        if (Mathf.Abs(newScore - previousScore) > Snakes.instance.minMovementInTimeframeToPreventTimeout)
-        {
-            ResetMovementTimetout();
-            previousScore = newScore;
-        }
-        else
-        {
-            timeLeft -= Time.deltaTime;
-        }
-    }
+public class SnakeScenario : MoveToTargetScenario<SnakeParameters>
+{
 }
