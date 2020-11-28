@@ -8,9 +8,9 @@ public class SimpleTurretScenario : IScenario
     public void Construct(ParametersBase parametersBase, Transform goal, float[] parameters)
     {
         ScenarioGoal = goal;
-        ScenarioTurret = parametersBase;
-        Parameters = values;
-        InitValues(values);
+        ScenarioTurret = parametersBase.GetComponent<Turret>();
+        Parameters = parameters;
+        InitValues(parameters);
     }
 
     public float[] Parameters {get;set;} 

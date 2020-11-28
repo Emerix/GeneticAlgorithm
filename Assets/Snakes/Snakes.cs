@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Snakes : GeneticSingleTestBase <SnakeParameters, SnakeScenario>
@@ -15,11 +13,6 @@ public class Snakes : GeneticSingleTestBase <SnakeParameters, SnakeScenario>
     private int MinMotorPower = 100;
     [SerializeField]
     private int MaxMotorPower = 2000;
-    
-    [SerializeField]
-    public float minMovementInTimeframeToPreventTimeout = 0.4f;
-    [SerializeField]
-    public float timeOutWithoutMovement = 2.0f;
     private Transform currentSnake;
     private int snakeJoints = 4;
 

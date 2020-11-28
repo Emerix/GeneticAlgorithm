@@ -47,7 +47,7 @@ public class CarParameters : ParametersBase
         suspensionFrequency = newParameters[2];
         for (int i = 0; i < wheelParameters.Length; i++)
         {
-            int index = i * 3;
+            int index = i * Cars.PARAMETERS_PER_WHEEL + Cars.PARAMETERS_PER_BOX;
             Vector2 wheelPosition = new Vector2(newParameters[index],newParameters[index+1]);
             wheelParameters[i].position = wheelPosition;
             wheelParameters[i].size = newParameters[index + 2];

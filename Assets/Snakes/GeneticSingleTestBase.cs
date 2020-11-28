@@ -23,13 +23,13 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
 
             scenarios[CurrentSlot].SaveScore();
             Debug.Log($"Reached score: {scenarios[CurrentSlot].GetScore()}");
-            KillSnake();
+            KillTestedObject();
             CurrentSlot++;
-            StartSnake();
+            StartObject();
         }
     }
 
-    private void StartSnake()
+    private void StartObject()
     {
         if (CurrentSlot < scenarios.Count)
         {
@@ -39,10 +39,10 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
         }
     }
 
-    private void KillSnake()
+    private void KillTestedObject()
     {
         currentTestedObject.gameObject.SetActive(false);
-        currentTestedObject.GetComponent<SnakeParameters>()?.Reset();
+        currentTestedObject.GetComponent<P>()?.Reset();
     }
 
     protected override void InitializeTest()
@@ -60,10 +60,10 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
 
     private P CreateParameterObject()
     {
-        P snake = Instantiate<P>(parameterPrefab);
-        snake.transform.position = start.position;
-        snake.gameObject.SetActive(false);
-        return snake;
+        P testedObject = Instantiate<P>(parameterPrefab);
+        testedObject.transform.position = start.position;
+        testedObject.gameObject.SetActive(false);
+        return testedObject;
     }
 
     protected override void StartGeneration()

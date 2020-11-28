@@ -75,13 +75,13 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 
     private void ResetMovementTimeout()
     {
-        timeLeft = Snakes.instance.timeOutWithoutMovement;
+        timeLeft = AdditionalTestParameters.TimeOutWithoutMovement;
     }
 
     private void UpdateMovementTimeout()
     {
         float newScore = CalculateNewScore();
-        if (Mathf.Abs(newScore - previousScore) > Snakes.instance.minMovementInTimeframeToPreventTimeout)
+        if (Mathf.Abs(newScore - previousScore) > AdditionalTestParameters.MinMovementInTimeframeToPreventTimeout)
         {
             ResetMovementTimeout();
             previousScore = newScore;
@@ -106,5 +106,8 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 }
 
 public class SnakeScenario : MoveToTargetScenario<SnakeParameters>
+{
+}
+public class CarScenario : MoveToTargetScenario<CarParameters>
 {
 }

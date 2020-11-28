@@ -4,10 +4,10 @@ using System.Globalization;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SnakesUI : MonoBehaviour
+public class CarsUI : MonoBehaviour
 {
     [SerializeField]
-    Snakes geneticTestBase;
+    Cars geneticTestBase;
 
     [SerializeField]
     Text timeText;
