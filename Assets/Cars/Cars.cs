@@ -8,9 +8,9 @@ public class Cars : GeneticSingleTestBase<CarParameters, CarScenario>
     
     public const int PARAMETERS_PER_BOX = 3;
 
-    [Range(0.1f,5)]
+    [Range(0.5f,5)]
     [SerializeField] private float maxBoxSizeX = 5;
-    [Range(0.1f,2)]
+    [Range(0.5f,2)]
     [SerializeField] private float maxBoxSizeY = 5;
     [Range(0.1f, 5f)]
     [SerializeField] private float maxWheelSize = 5;
@@ -37,12 +37,12 @@ public class Cars : GeneticSingleTestBase<CarParameters, CarScenario>
 
     private float GetRandomBoxSizeX()
     {
-        return UnityEngine.Random.Range(0, maxBoxSizeX);
+        return UnityEngine.Random.Range(0.5f, maxBoxSizeX);
     }
 
     private float GetRandomBoxSizeY()
     {
-        return UnityEngine.Random.Range(0, maxBoxSizeY);
+        return UnityEngine.Random.Range(0.5f, maxBoxSizeY);
     }
 
     private float GetRandomSuspensionFrequency()
