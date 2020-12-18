@@ -3,12 +3,12 @@
 public class SimpleTurretScenario : IScenario
 {
     public Transform ScenarioGoal { get; set; }
-    public Turret ScenarioTurret { get; set; }
+    public TurretParameters ScenarioTurretParameters { get; set; }
 
     public void Construct(ParametersBase parametersBase, Transform goal, float[] parameters)
     {
         ScenarioGoal = goal;
-        ScenarioTurret = parametersBase.GetComponent<Turret>();
+        ScenarioTurretParameters = parametersBase.GetComponent<TurretParameters>();
         Parameters = parameters;
         InitValues(parameters);
     }
@@ -18,22 +18,16 @@ public class SimpleTurretScenario : IScenario
     private Bullet bullet;
     private float score = float.PositiveInfinity;
 
-    public SimpleTurretScenario(Transform goal, Turret turret, float[] values)
+    public void InitValues(float[] newValues)
     {
-        
-    }
-
-    public void InitValues(float[] values)
-    {
-        Parameters = values;
-        ScenarioTurret.power = values[0];
-        ScenarioTurret.degreeRotation = values[1];
+        Parameters = newValues;
+        ScenarioTurretParameters.SetParameters(newValues);
     }
 
     public void Proceed()
     {
-        ScenarioTurret.Rotate();
-        bullet = ScenarioTurret.Shoot();
+        ScenarioTurretParameters.Rotate();
+        bullet = ScenarioTurretParameters.Shoot();
     }
 
     public bool IsDone()
@@ -55,7 +49,7 @@ public class SimpleTurretScenario : IScenario
 
     public Transform GetTestedObject()
     {
-        return ScenarioTurret.transform;
+        return ScenarioTurretParameters.transform;
     }
 
     public void SaveScore()

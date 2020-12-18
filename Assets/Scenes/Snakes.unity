@@ -773,7 +773,6 @@ GameObject:
   m_Component:
   - component: {fileID: 456202346}
   - component: {fileID: 456202345}
-  - component: {fileID: 456202348}
   - component: {fileID: 456202347}
   m_Layer: 0
   m_Name: CrazyProfessor
@@ -791,22 +790,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 456202344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f514d3b57ff4441b8070fa582b4bfd5, type: 3}
+  m_Script: {fileID: 11500000, guid: a95024bac9f7c4d4f8623cd70f57f2ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PoolCount: 10
-  iterationCount: 10
-  timeOutSeconds: 30
+  iterationCount: 100
+  timeOutSeconds: 60
   bestMarker: {fileID: 0}
   pauseBetweenIterations: 1
-  mutationChance: 0.1
-  parameterPrefab: {fileID: 7605269971642169964, guid: bbc6aa7b2c8f1d04bac962d1cfc685ca, type: 3}
-  goal: {fileID: 1891089934}
+  mutationChance: 0.2
+  parameterPrefab: {fileID: 7903049827955774211, guid: 366a97eca31e00d478d0ad3ca45f9f25, type: 3}
+  goal: {fileID: 1271440902}
   start: {fileID: 574247615}
-  maxBoxSizeX: 5
-  maxBoxSizeY: 2
-  maxWheelSize: 2
-  maxSuspensionFrequency: 20
+  MinSinusMultiplier: 2
+  MaxSinusMultiplier: 10
+  MaxOffset: 2
+  MinMotorPower: 40
+  MaxMotorPower: 500
 --- !u!4 &456202346
 Transform:
   m_ObjectHideFlags: 0
@@ -830,7 +830,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 456202344}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b7460114f6bfe449857a4459ec91a97, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a1db81fb343ad642921e9d308d61b9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   geneticTestBase: {fileID: 456202345}
@@ -840,20 +840,6 @@ MonoBehaviour:
   timeScaleText: {fileID: 1823173011}
   slider: {fileID: 1990453428}
   timeScaleNumText: {fileID: 1460212022}
---- !u!114 &456202348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456202344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ac258bcf8f21f047a0c009ee864683b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeOutWithoutMovement: 2
-  minMovementInTimeframeToPreventTimeout: 0.4
 --- !u!1 &540436243
 GameObject:
   m_ObjectHideFlags: 0
@@ -1268,6 +1254,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1271440902 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2654472428012673388, guid: 0ce3d10053cdc064b94d8cc1edcbfcb2, type: 3}
+  m_PrefabInstance: {fileID: 2134401420}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1313747851
 GameObject:
   m_ObjectHideFlags: 0
@@ -1853,11 +1844,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823173009}
   m_CullTransparentMesh: 0
---- !u!4 &1891089934 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2654472428012673388, guid: 0ce3d10053cdc064b94d8cc1edcbfcb2, type: 3}
-  m_PrefabInstance: {fileID: 2134401420}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1990453426
 GameObject:
   m_ObjectHideFlags: 0

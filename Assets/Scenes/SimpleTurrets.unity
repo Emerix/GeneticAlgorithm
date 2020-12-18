@@ -231,7 +231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 306923861}
   m_LocalRotation: {x: 0.67828804, y: -0, z: -0, w: 0.7347961}
-  m_LocalPosition: {x: 55.7, y: 26.51, z: -5.04}
+  m_LocalPosition: {x: 21.7, y: 27.3, z: 4.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -266,25 +266,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3f04668536193b4f91d252a9036886a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iterationCount: 10
-  timeOutSeconds: 10
   PoolCount: 10
+  iterationCount: 50
+  timeOutSeconds: 10
   bestMarker: {fileID: 43103845}
   pauseBetweenIterations: 1
   mutationChance: 0.1
-  MaxPower: 100
+  MaxPower: 60
   MaxRotation: 360
-  turretPrefab: {fileID: 1089905581, guid: 9379a46bf1c243b418987dae361b1305, type: 3}
+  turretParametersPrefab: {fileID: 1089905581, guid: 9379a46bf1c243b418987dae361b1305, type: 3}
   goalPrefab: {fileID: 2654472428012673388, guid: 0ce3d10053cdc064b94d8cc1edcbfcb2, type: 3}
   boxPrefab: {fileID: 3173125797945136182, guid: 892f6a058184cd0458ce49baf2cd99d7, type: 3}
-  iterationCount: 10
-  timeOutSeconds: 10
-  PoolCount: 10
   boxDistance: 11
-  goalPosition: {x: 0, y: 0, z: 4}
-  bestMarker: {fileID: 43103845}
-  pauseBetweenIterations: 0.5
-  mutationChance: 0.1
+  boxesInARow: 5
+  goalPosition: {x: -4, y: 0, z: 4}
 --- !u!4 &996177489
 Transform:
   m_ObjectHideFlags: 0

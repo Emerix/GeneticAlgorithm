@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Turret : MonoBehaviour, ITurret
+public class TurretParameters : ParametersBase, ITurret
 {
     [SerializeField]
     public Bullet bulletPrefab;
@@ -23,4 +23,13 @@ public class Turret : MonoBehaviour, ITurret
         return bullet;
     }
 
+    protected override void Update()
+    {
+    }
+
+    public override void SetParameters(float[] newParameters)
+    {
+        power = newParameters[0];
+        degreeRotation = newParameters[1];
+    }
 }

@@ -10,7 +10,7 @@ public class Genetics
         {
             return null;
         }
-        int crossOverIndex = UnityEngine.Random.Range(0, length);
+        int crossOverIndex = UnityEngine.Random.Range(0, length+1);
 
         float[] output = new float[length];
         for (int i = 0; i < length; i++)

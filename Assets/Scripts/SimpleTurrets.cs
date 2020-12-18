@@ -8,7 +8,7 @@ public class SimpleTurrets : AbstractParallelGeneticTest
     [SerializeField]
     private float MaxRotation = 360;
     [SerializeField]
-    private Turret turretPrefab;
+    private TurretParameters turretParametersPrefab;
     [SerializeField]
     private Transform goalPrefab;
     [SerializeField]
@@ -16,9 +16,11 @@ public class SimpleTurrets : AbstractParallelGeneticTest
 
     [SerializeField]
     private float boxDistance = 11;
+    [SerializeField]
+    private int boxesInARow = 5;
 
     [SerializeField]
-    private Vector3 goalPosition = new Vector3(0, 0, 4);
+    private Vector3 goalPosition = new Vector3(-2, 0, 4);
 
     private float GetRandomPower()
     {
@@ -39,17 +41,19 @@ public class SimpleTurrets : AbstractParallelGeneticTest
         scenarios = new List<IScenario>();
         for (int i = 0; i < PoolCount; i++)
         {
-            Vector3 boxposition = new Vector3(i * boxDistance, 0, 0);
+            float z = (i / boxesInARow) * boxDistance;
+            Vector3 boxposition = new Vector3((i % boxesInARow) * boxDistance, 0, z);
             var box = Instantiate(boxPrefab, boxposition, Quaternion.identity, null);
             var scenarioGoal = Instantiate(goalPrefab);
-            var scenarioTurret = Instantiate(turretPrefab);
+            var scenarioTurret = Instantiate(turretParametersPrefab);
             scenarioGoal.transform.SetParent(box);
             scenarioTurret.transform.SetParent(box);
             scenarioGoal.transform.localPosition = goalPosition;
             scenarioTurret.transform.localPosition = Vector3.zero;
 
             float[] scenarioParameters = new float[] { GetRandomPower(), GetRandomRotation() };
-            SimpleTurretScenario scenario = new SimpleTurretScenario(scenarioGoal, scenarioTurret, scenarioParameters);
+            SimpleTurretScenario scenario = new SimpleTurretScenario();
+            scenario.Construct(scenarioTurret, scenarioGoal, scenarioParameters);
             scenarios.Add(scenario);
         }
     }
