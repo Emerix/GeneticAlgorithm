@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,6 +27,8 @@ namespace PhysicsScenes
                 while (IsDone() == false && CurrentTime > 0)
                 {
                     CurrentTime -= Time.deltaTime;
+                    Transform best = FindBest();
+                    SnakeCameraFollower.instance.SetTarget(best);
                     yield return null;
                 }
 
@@ -36,6 +40,12 @@ namespace PhysicsScenes
 
                 KillTestedObject();
             }
+        }
+
+        private Transform FindBest()
+        {
+            IScenario best = scenarios.OrderBy(scenario => scenario.GetCurrentScore()).First();
+            return best.GetTestedObject().GetChild(0);
         }
 
         private void KillTestedObject()

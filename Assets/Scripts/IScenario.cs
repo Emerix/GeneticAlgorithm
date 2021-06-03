@@ -12,4 +12,5 @@ public interface IScenario
     Transform GetTestedObject();
     void InitValues(float[] newValues);
     bool IsDone();
+    float GetCurrentScore();
 }

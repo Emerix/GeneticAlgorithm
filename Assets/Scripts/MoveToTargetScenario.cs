@@ -59,13 +59,14 @@ public class MoveToTargetScenario<P> : IScenario where P : ParametersBase
         return isDone;
     }
 
+    public float GetCurrentScore()
+    {
+        return CalculateNewScore();
+    }
+
     public void Proceed()
     {
         trackedObject.gameObject.SetActive(true);
-        if (SnakeCameraFollower.instance != null)
-        {
-            SnakeCameraFollower.instance.SetTarget(trackedObject.transform.GetChild(0));
-        }
 
         ResetMovementTimeout();
     }

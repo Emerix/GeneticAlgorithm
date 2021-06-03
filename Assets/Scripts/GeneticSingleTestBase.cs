@@ -71,6 +71,12 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
         CurrentSlot = 0;
         scenarios[CurrentSlot].Proceed();
         currentTestedObject = scenarios[CurrentSlot].GetTestedObject();
+        
+            
+        if (SnakeCameraFollower.instance != null)
+        {
+            SnakeCameraFollower.instance.SetTarget(currentTestedObject.GetChild(0));
+        }
     }
 
     public float CurrentTime { get; private set; }
