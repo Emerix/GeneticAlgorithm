@@ -1,7 +1,9 @@
-﻿using System;
+using System;
+using Cars;
+using PhysicsScenes;
 using UnityEngine;
 
-public class Cars : GeneticSingleTestBase<CarParameters, CarScenario>
+public class CarsMultiple : GeneticParallelTestBase<CarParameters, CarScenario>, ICarsData
 {
     public const int WHEEL_COUNT = 2;
     public const int PARAMETERS_PER_WHEEL = 3;
@@ -59,4 +61,6 @@ public class Cars : GeneticSingleTestBase<CarParameters, CarScenario>
     {
         return UnityEngine.Random.Range(-0.5f, 0.5f);
     }
+
+    public int CurrentSlot { get; }
 }

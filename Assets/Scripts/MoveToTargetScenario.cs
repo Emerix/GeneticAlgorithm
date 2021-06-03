@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
+public class MoveToTargetScenario<P> : IScenario where P : ParametersBase
 {
-    protected P snake;
+    protected P trackedObject;
     protected float score = float.PositiveInfinity;
     private float previousScore = float.MaxValue;
     private float timeLeft = float.MaxValue;
@@ -12,7 +12,7 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 
     public void Construct(ParametersBase parametersBase, Transform goal, float[] parameters)
     {
-        this.snake = (P)parametersBase;
+        trackedObject = (P) parametersBase;
         this.goal = goal;
         InitValues(parameters);
         isDone = false;
@@ -33,13 +33,13 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 
     public Transform GetTestedObject()
     {
-        return snake.transform;
+        return trackedObject.transform;
     }
 
     public void InitValues(float[] newValues)
     {
         Parameters = newValues;
-        snake.SetParameters(newValues);
+        trackedObject.SetParameters(newValues);
     }
 
     public bool IsDone()
@@ -48,22 +48,25 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
         {
             return true;
         }
+
         UpdateMovementTimeout();
         if (timeLeft < 0)
         {
             Debug.Log($"Timed out");
             isDone = true;
         }
+
         return isDone;
     }
 
     public void Proceed()
     {
-        snake.gameObject.SetActive(true);
+        trackedObject.gameObject.SetActive(true);
         if (SnakeCameraFollower.instance != null)
         {
-            SnakeCameraFollower.instance.SetTarget(snake.transform.GetChild(0));
+            SnakeCameraFollower.instance.SetTarget(trackedObject.transform.GetChild(0));
         }
+
         ResetMovementTimeout();
     }
 
@@ -95,7 +98,7 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
     private float CalculateNewScore()
     {
         float newScore = float.MaxValue;
-        foreach (Transform child in snake.transform)
+        foreach (Transform child in trackedObject.transform)
         {
             float childDistance = Vector3.Distance(goal.transform.position, child.position);
             newScore = Mathf.Min(score, childDistance);
@@ -108,6 +111,7 @@ public class MoveToTargetScenario <P> : IScenario where P:ParametersBase
 public class SnakeScenario : MoveToTargetScenario<SnakeParameters>
 {
 }
+
 public class CarScenario : MoveToTargetScenario<CarParameters>
 {
 }
