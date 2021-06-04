@@ -35,6 +35,11 @@ public class SimpleTurretScenario : IScenario
         return bullet.DidHitSomething;
     }
 
+    public float GetCurrentScore()
+    {
+        return score;
+    }
+
     public float GetScore()
     {
         return score;
