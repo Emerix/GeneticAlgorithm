@@ -36,6 +36,11 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
             scenarios[CurrentSlot].Proceed();
             currentTestedObject = scenarios[CurrentSlot].GetTestedObject();
             currentTestedObject.transform.position = start.position;
+            
+            if (SnakeCameraFollower.instance != null)
+            {
+                SnakeCameraFollower.instance.SetTarget(currentTestedObject.GetChild(0));
+            }
         }
     }
 
@@ -72,7 +77,6 @@ public abstract class GeneticSingleTestBase<P, S> : AbstractGeneticTest where S 
         scenarios[CurrentSlot].Proceed();
         currentTestedObject = scenarios[CurrentSlot].GetTestedObject();
         
-            
         if (SnakeCameraFollower.instance != null)
         {
             SnakeCameraFollower.instance.SetTarget(currentTestedObject.GetChild(0));

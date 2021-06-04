@@ -939,7 +939,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PoolCount: 10
-  iterationCount: 50
+  iterationCount: 200
   timeOutSeconds: 30
   bestMarker: {fileID: 0}
   pauseBetweenIterations: 1
