@@ -1,7 +1,17 @@
 ﻿using UnityEngine;
 
-public class SnakeParameters : ParametersBase
+public class SnakeBrainParameters : ParametersBase
 {
+    public enum BrainFunctions
+    {
+        Sum,
+        Product,
+        
+    }
+    // would need to determine a couple sensors.
+    // Joint angle is in the hinge joint
+    // contact points might be helpful - or at least whether joint / rigid body has contact to ground
+    // not sure if we need a direction...
     [System.Serializable]
     public class HingeJointParameters
     {

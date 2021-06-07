@@ -464,7 +464,7 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 95.13649, y: 1.3594372, z: 0}
+    - position: {x: 95.13649, y: 1.359437, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -474,7 +474,27 @@ MonoBehaviour:
       spriteIndex: 0
       corner: 1
       m_CornerMode: 1
-    - position: {x: 110.38034, y: 0.123449564, z: 0}
+    - position: {x: 99.41191, y: 0.013268471, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 101.66466, y: 1.3142128, z: 0}
+      leftTangent: {x: 0, y: 0, z: 0}
+      rightTangent: {x: 0, y: 0, z: 0}
+      mode: 0
+      height: 1
+      bevelCutoff: 0
+      bevelSize: 0
+      spriteIndex: 0
+      corner: 1
+      m_CornerMode: 1
+    - position: {x: 110.38034, y: 0.123449326, z: 0}
       leftTangent: {x: 0, y: 0, z: 0}
       rightTangent: {x: 0, y: 0, z: 0}
       mode: 0
@@ -646,7 +666,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39388041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.11, z: 0}
+  m_LocalPosition: {x: -101.05, y: 7.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -697,8 +717,10 @@ PolygonCollider2D:
       - {x: 66.98343, y: -8.528464}
       - {x: 68.59635, y: -4.3876762}
       - {x: 84.83659, y: -5.644494}
-      - {x: 95.13649, y: 1.3594372}
-      - {x: 110.38034, y: 0.123449564}
+      - {x: 95.13649, y: 1.359437}
+      - {x: 99.41191, y: 0.013268471}
+      - {x: 101.66466, y: 1.3652229}
+      - {x: 110.38034, y: 0.123449326}
       - {x: 128.50816, y: 7.5393753}
       - {x: 143.61467, y: 0.3981135}
       - {x: 166.13712, y: 18.525934}

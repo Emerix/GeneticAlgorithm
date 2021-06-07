@@ -1,28 +1,15 @@
 ﻿using System;
 using UnityEngine;
 
-public class Snakes : GeneticSingleTestBase <SnakeParameters, SnakeScenario>
+public class Snakes : GeneticSingleTestBase<SnakeParameters, SnakeScenario>
 {
-    [SerializeField]
-    private int MinSinusMultiplier = 10;
-    [SerializeField]
-    private int MaxSinusMultiplier = 100;
-    [SerializeField]
-    private int MaxOffset = 100;
-    [SerializeField]
-    private int MinMotorPower = 100;
-    [SerializeField]
-    private int MaxMotorPower = 2000;
+    [SerializeField] private int MinSinusMultiplier = 10;
+    [SerializeField] private int MaxSinusMultiplier = 100;
+    [SerializeField] private int MaxOffset = 100;
+    [SerializeField] private int MinMotorPower = 100;
+    [SerializeField] private int MaxMotorPower = 2000;
     private Transform currentSnake;
     private int snakeJoints = 4;
-
-    public static Snakes instance;
-
-    protected override void Start()
-    {
-        instance = this;
-        base.Start();
-    }
 
     protected override Func<float>[] GetRandomFunctions()
     {
