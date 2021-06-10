@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +14,7 @@ namespace PhysicsScenes
         [SerializeField] private Transform goal;
         [SerializeField] private Transform start;
         [SerializeField] private int sceneIndex = 1;
+        public float CurrentTime { get; private set; }
 
         private List<Transform> currentTestedObjects = new List<Transform>();
         private List<PhysicsScene2D> physicsScenes = new List<PhysicsScene2D>();
@@ -42,18 +42,13 @@ namespace PhysicsScenes
             }
         }
 
-        private Transform FindBest()
+        protected override void StartGeneration()
         {
-            IScenario best = scenarios.OrderBy(scenario => scenario.GetCurrentScore()).First();
-            return best.GetTestedObject().GetChild(0);
-        }
-
-        private void KillTestedObject()
-        {
-            foreach (Transform currentTestedObject in currentTestedObjects)
+            for (var index = 0; index < scenarios.Count; index++)
             {
-                currentTestedObject.gameObject.SetActive(false);
-                currentTestedObject.GetComponent<P>()?.Reset();
+                IScenario scenario = scenarios[index];
+                scenario.Proceed();
+                currentTestedObjects[index] = scenario.GetTestedObject();
             }
         }
 
@@ -69,12 +64,21 @@ namespace PhysicsScenes
                 scenario.Construct(parameterObject, goal, scenarioParameters);
                 scenarios.Add(scenario);
                 currentTestedObjects.Add(parameterObject.transform);
+
                 LoadSceneParameters parameters =
                     new LoadSceneParameters(LoadSceneMode.Additive, LocalPhysicsMode.Physics2D);
                 Scene loadedScene = SceneManager.LoadScene(sceneIndex, parameters);
                 PhysicsScene2D physicsScene = loadedScene.GetPhysicsScene2D();
                 physicsScenes.Add(physicsScene);
                 SceneManager.MoveGameObjectToScene(parameterObject.gameObject, loadedScene);
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            foreach (PhysicsScene2D physicsScene2D in physicsScenes)
+            {
+                physicsScene2D.Simulate(Time.fixedDeltaTime);
             }
         }
 
@@ -86,23 +90,18 @@ namespace PhysicsScenes
             return testedObject;
         }
 
-        protected override void StartGeneration()
+        private Transform FindBest()
         {
-            for (var index = 0; index < scenarios.Count; index++)
-            {
-                IScenario scenario = scenarios[index];
-                scenario.Proceed();
-                currentTestedObjects[index] = scenario.GetTestedObject();
-            }
+            IScenario best = scenarios.OrderBy(scenario => scenario.GetCurrentScore()).First();
+            return best.GetTestedObject().GetChild(0);
         }
 
-        public float CurrentTime { get; private set; }
-
-        private void FixedUpdate()
+        private void KillTestedObject()
         {
-            foreach (PhysicsScene2D physicsScene2D in physicsScenes)
+            foreach (Transform currentTestedObject in currentTestedObjects)
             {
-                physicsScene2D.Simulate(Time.fixedDeltaTime);
+                currentTestedObject.gameObject.SetActive(false);
+                currentTestedObject.GetComponent<P>()?.Reset();
             }
         }
     }

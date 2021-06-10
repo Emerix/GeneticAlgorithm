@@ -5,37 +5,33 @@ using UnityEngine;
 
 public abstract class AbstractGeneticTest : MonoBehaviour
 {
-    [SerializeField]
-    protected float PoolCount = 10;
-    [SerializeField]
-    private int iterationCount = 10;
-    [SerializeField]
-    protected float timeOutSeconds = 10;
-    [SerializeField]
-    private Transform bestMarker;
-    [SerializeField]
-    private float pauseBetweenIterations = 1f;
-    [Range(0, 1)]
-    [SerializeField]
-    private float mutationChance = 0.1f;
+    [SerializeField] protected float PoolCount = 10;
+    [SerializeField] private int iterationCount = 10;
+    [SerializeField] protected float timeOutSeconds = 10;
+    [SerializeField] private Transform bestMarker;
+    [SerializeField] private float pauseBetweenIterations = 1f;
+    [Range(0, 1)] [SerializeField] private float mutationChance = 0.1f;
 
     private int currentIteration = 0;
     protected List<IScenario> scenarios;
 
-    public int CurrentIteration { get => currentIteration; private set => currentIteration = value; }
+    public int CurrentIteration
+    {
+        get => currentIteration;
+        private set => currentIteration = value;
+    }
 
     protected void DoGenetics()
     {
-        // leave best 2
         int leaveBest = 2;
 
-        Debug.Log("best params: "+ string.Join(", ", scenarios[0].Parameters));
+        Debug.Log("best params: " + string.Join(", ", scenarios[0].Parameters));
         var firstArray = scenarios[0].Parameters;
         var secondArray = scenarios[1].Parameters;
         for (int i = leaveBest; i < PoolCount; i++)
         {
             // do crossover and stuff
-            var newValues = Genetics.DoCrossOver(firstArray, secondArray);
+            float[] newValues = Genetics.DoCrossOver(firstArray, secondArray);
             // do mutation
             newValues = Genetics.DoMutation(newValues, mutationChance, GetRandomFunctions());
             // do next iteration
@@ -53,6 +49,7 @@ public abstract class AbstractGeneticTest : MonoBehaviour
         {
             randomFactors[i] = randomFunctions[i]();
         }
+
         return randomFactors;
     }
 
@@ -66,7 +63,7 @@ public abstract class AbstractGeneticTest : MonoBehaviour
         }
     }
 
-    IEnumerator DoIterations()
+    private IEnumerator DoIterations()
     {
         for (CurrentIteration = 0; CurrentIteration < iterationCount; CurrentIteration++)
         {
@@ -92,6 +89,7 @@ public abstract class AbstractGeneticTest : MonoBehaviour
         {
             return;
         }
+
         bestMarker.position = scenarios[0].GetTestedObject().position;
     }
 

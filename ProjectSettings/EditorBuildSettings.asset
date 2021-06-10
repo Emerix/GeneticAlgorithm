@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/PhysicsScenes/PhysicSceneExample.unity
     guid: d6e52ee0de8694252ba1fd9fc28bf41f
   - enabled: 1
-    path: Assets/Scenes/CarSceneBackground.unity
+    path: Assets/Cars/CarSceneBackground.unity
     guid: 0d6c881a093e9434d9ffe013bb85224b
   m_configObjects: {}
